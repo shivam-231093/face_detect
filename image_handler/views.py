@@ -39,12 +39,12 @@ def detect_faces(image_path):
 def handle_image_upload(request):
     if request.method == 'POST' and request.FILES.get('image'):
         image_file = request.FILES['image']
-        path = default_storage.save(f'tmp/{{image_file.name}}', ContentFile(image_file.read()))
+        path = default_storage.save(f'tmp/{image_file.name}', ContentFile(image_file.read()))
         tmp_file = default_storage.path(path)
 
         if detect_faces(tmp_file):
             bucket = storage.bucket()
-            blob = bucket.blob(f'images/image_file.name')
+            blob = bucket.blob(f'images/{image_file.name}')
             blob.upload_from_filename(tmp_file)
 
            
